@@ -19,31 +19,42 @@
 
 #include "Parser.hpp"
 
-int Parser::parse(const string &file)
+#include <algorithm>
+#include <cmath>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <ostream>
+#include <sstream>
+
+using std::cout;
+using std::endl;
+
+int Parser::parse(const std::string &file)
 {
     cout << "\nFile Name: " + file << endl;
 
-    ifstream fileStream(file);
+    std::ifstream fileStream(file);
     if (!fileStream) {
         cout << "Error: Netlist not avialable in the project directory" << endl;
         return 1;
     }
-    string line;
+    std::string line;
     int lineNumber = 1, v_count = 0, i_count = 0, r_count = 0, vc_count = 0,
         ic_count = 0, error = 0;
 
     // Stores pointer of all independent sources and resistors
     // for assigning to controlling_element variable later
-    map<string, shared_ptr<CircuitElement>> elementMap;
+    std::map<std::string, std::shared_ptr<CircuitElement>> elementMap;
 
     while (getline(fileStream, line)) {
         lineNumber++;
 
-        transform(line.begin(), line.end(), line.begin(), ::toupper);
+        std::transform(line.begin(), line.end(), line.begin(), ::toupper);
 
-        stringstream ss(line);
-        vector<string> tokens;
-        string buf;
+        std::stringstream ss(line);
+        std::vector<std::string> tokens;
+        std::string buf;
 
         while (ss >> buf) tokens.push_back(buf);
 
@@ -64,14 +75,15 @@ int Parser::parse(const string &file)
         if (end == tokens.at(3).c_str() || *end != '\0' || value == HUGE_VAL ||
             value == 0) {
             cout << "Error: Illegal argument for value at line number "
-                 << (lineNumber - 1) << ": " + line << endl;
+                 << (lineNumber - 1) << ": " + line << end;
             error += 1;
             value = 1;
         }
 
         // Dependent Current Source (contains two data validation condidtions)
         if ((tokens.at(0).rfind("IC", 0) == 0) && (tokens.size() >= 6)) {
-            shared_ptr<CircuitElement> temp = make_shared<CircuitElement>();
+            std::shared_ptr<CircuitElement> temp =
+                std::make_shared<CircuitElement>();
             temp->name = tokens.at(0);
             temp->type = Ic;
             temp->nodeA = tokens.at(1);
@@ -84,7 +96,7 @@ int Parser::parse(const string &file)
             if (tokens.at(4) != "V" && tokens.at(4) != "I") {
                 cout << "Error: Illegal controlling variable argument at line "
                         "number "
-                     << (lineNumber - 1) << ": " + line << endl;
+                     << (lineNumber - 1) << ": " + line << end;
                 error += 1;
             }
 
@@ -93,13 +105,13 @@ int Parser::parse(const string &file)
                 tokens.at(5).rfind("VC", 0) == 0) {
                 cout << "Error: Controlled source " + tokens.at(0) +
                             " cannot be cascaded at line number "
-                     << (lineNumber - 1) << ": " + line << endl;
+                     << (lineNumber - 1) << ": " + line << end;
                 error += 1;
 
                 temp->controlling_variable = none;
                 temp->controlling_element = NULL;
             } else {
-                temp->controlling_element = make_shared<CircuitElement>();
+                temp->controlling_element = std::make_shared<CircuitElement>();
                 temp->controlling_element->name = tokens.at(5);
             }
 
@@ -114,7 +126,8 @@ int Parser::parse(const string &file)
         }
         // Dependent Voltage Source (contains tow data validation condidtions)
         else if ((tokens.at(0).rfind("VC", 0) == 0) && (tokens.size() >= 6)) {
-            shared_ptr<CircuitElement> temp = make_shared<CircuitElement>();
+            std::shared_ptr<CircuitElement> temp =
+                std::make_shared<CircuitElement>();
             temp->name = tokens.at(0);
             temp->type = Vc;
             temp->nodeA = tokens.at(1);
@@ -127,7 +140,7 @@ int Parser::parse(const string &file)
             if (tokens.at(4) != "V" && tokens.at(4) != "I") {
                 cout << "Error: Illegal controlling variable argument at line "
                         "number "
-                     << (lineNumber - 1) << ": " + line << endl;
+                     << (lineNumber - 1) << ": " + line << end;
                 error += 1;
             }
 
@@ -136,13 +149,13 @@ int Parser::parse(const string &file)
                 tokens.at(5).rfind("VC", 0) == 0) {
                 cout << "Error: Controlled source " + tokens.at(0) +
                             " cannot be cascaded"
-                     << endl;
+                     << end;
                 error += 1;
 
                 temp->controlling_variable = none;
                 temp->controlling_element = NULL;
             } else {
-                temp->controlling_element = make_shared<CircuitElement>();
+                temp->controlling_element = std::make_shared<CircuitElement>();
                 temp->controlling_element->name = tokens.at(5);
             }
 
@@ -158,7 +171,8 @@ int Parser::parse(const string &file)
         }
         // Independent Voltage Source
         else if ((tokens.at(0).rfind("V", 0) == 0) && (tokens.size() >= 4)) {
-            shared_ptr<CircuitElement> temp = make_shared<CircuitElement>();
+            std::shared_ptr<CircuitElement> temp =
+                std::make_shared<CircuitElement>();
             temp->name = tokens.at(0);
             temp->type = V;
             temp->nodeA = tokens.at(1);
@@ -179,7 +193,8 @@ int Parser::parse(const string &file)
         }
         // Independent Current Source (contains one data validation condition)
         else if ((tokens.at(0).rfind("I", 0) == 0) && (tokens.size() >= 4)) {
-            shared_ptr<CircuitElement> temp = make_shared<CircuitElement>();
+            std::shared_ptr<CircuitElement> temp =
+                std::make_shared<CircuitElement>();
             temp->name = tokens.at(0);
             temp->type = I;
             temp->nodeA = tokens.at(1);
@@ -191,7 +206,7 @@ int Parser::parse(const string &file)
             // Data Validation: Correct group declaration
             else if (tokens.size() >= 5 && tokens.at(4) != "G1") {
                 cout << "Warning: Mention correct group at line number "
-                     << (lineNumber - 1) << ": " + line << endl;
+                     << (lineNumber - 1) << ": " + line << end;
                 temp->group = G1;
             } else
                 temp->group = G1;
@@ -210,7 +225,8 @@ int Parser::parse(const string &file)
         }
         // Resistor (contains one data validation condition)
         else if ((tokens.at(0).rfind("R", 0) == 0) && (tokens.size() >= 4)) {
-            shared_ptr<CircuitElement> temp = make_shared<CircuitElement>();
+            std::shared_ptr<CircuitElement> temp =
+                std::make_shared<CircuitElement>();
             temp->name = tokens.at(0);
             temp->type = R;
             temp->nodeA = tokens.at(1);
@@ -248,7 +264,7 @@ int Parser::parse(const string &file)
     }
 
     // Assign controlling_element variable using the pointers stored in the map
-    for (shared_ptr<CircuitElement> circuitElement : circuitElements) {
+    for (std::shared_ptr<CircuitElement> circuitElement : circuitElements) {
         if (circuitElement->controlling_variable != none) {
             // Checks whether the referenced element is present in the netlist
             if (elementMap.find(circuitElement->controlling_element->name) !=
@@ -304,7 +320,7 @@ int Parser::parse(const string &file)
 
 void Parser::print()
 {
-    for (shared_ptr<CircuitElement> circuitElement : circuitElements)
+    for (std::shared_ptr<CircuitElement> circuitElement : circuitElements)
         if (circuitElement->type == V || circuitElement->type == I ||
             circuitElement->type == R)
             cout << circuitElement->name + " " + circuitElement->nodeA + " " +

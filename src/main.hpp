@@ -27,8 +27,6 @@
 #include "Node/Node.hpp"
 #include "Parser/Parser.hpp"
 
-using namespace std;
-
 /*
  * @brief		Creates map of nodes and group_2 element to
  *				index position of in MNA and RHS matrices
@@ -38,7 +36,7 @@ using namespace std;
  *
  * @return		void
  */
-void makeIndexMap(map<string, int> &indexMap, Parser &parser);
+void makeIndexMap(std::map<std::string, int> &indexMap, Parser &parser);
 
 /*
  * @brief		Prints the MNA, x and RHS matrices
@@ -49,8 +47,9 @@ void makeIndexMap(map<string, int> &indexMap, Parser &parser);
  *
  * @return		void
  */
-void printMNAandRHS(vector<vector<double>> &mna, map<string, int> &indexMap,
-                    vector<double> &rhs);
+void printMNAandRHS(std::vector<std::vector<double>> &mna,
+                    std::map<std::string, int> &indexMap,
+                    std::vector<double> &rhs);
 
 /*
  * @brief		Creates graph from the vector for traversal
@@ -60,7 +59,8 @@ void printMNAandRHS(vector<vector<double>> &mna, map<string, int> &indexMap,
  *
  * @return		void
  */
-void makeGraph(map<string, shared_ptr<Node>> &nodeMap, Parser &parser);
+void makeGraph(std::map<std::string, std::shared_ptr<Node>> &nodeMap,
+               Parser &parser);
 
 /*
  * @brief		Print the solution of x along with unknown variables
@@ -70,6 +70,4 @@ void makeGraph(map<string, shared_ptr<Node>> &nodeMap, Parser &parser);
  *
  * @return		void
  */
-void printxX(map<string, int> &indexMap, Eigen::MatrixXd &X);
-
-int main();
+void printxX(std::map<std::string, int> &indexMap, Eigen::MatrixXd &X);

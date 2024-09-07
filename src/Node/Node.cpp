@@ -19,8 +19,9 @@
 
 #include "Node.hpp"
 
-void Node::traverse(map<string, int> &indexMap, vector<vector<double>> &mna,
-                    vector<double> &rhs)
+void Node::traverse(std::map<std::string, int> &indexMap,
+                    std::vector<std::vector<double>> &mna,
+                    std::vector<double> &rhs)
 {
     // When ground is encountered
     if (name.compare("0") == 0) {
@@ -33,7 +34,7 @@ void Node::traverse(map<string, int> &indexMap, vector<vector<double>> &mna,
     processed = true;
 
     // Processes the all the edges connected to this node
-    for (shared_ptr<Edge> edge : edges) {
+    for (std::shared_ptr<Edge> edge : edges) {
         // Processes the edge only once
         if (edge->circuitElement->processed) continue;
         edge->circuitElement->processed = true;
@@ -522,6 +523,6 @@ void Node::traverse(map<string, int> &indexMap, vector<vector<double>> &mna,
     }
 
     // Traverses recursively all the nodes connected to this node
-    for (shared_ptr<Edge> edge : edges)
+    for (std::shared_ptr<Edge> edge : edges)
         edge->target->traverse(indexMap, mna, rhs);
 }

@@ -22,24 +22,22 @@
 #include <memory>
 #include <string>
 
-using namespace std;
-
 enum Component { V, I, R, Ic, Vc };  // Identifies type of element
 enum Group { G1, G2 };               // Groups element based on output required
 enum Variable { none, v, i };        // Controlling variable
 
 struct CircuitElement
 {
-    string name;     // Name of the element
-    Component type;  // Type of the element
-    string nodeA;    // Starting node
-    string nodeB;    // Ending node
-    Group group;     // Group of the element
+    std::string name;   // Name of the element
+    Component type;     // Type of the element
+    std::string nodeA;  // Starting node
+    std::string nodeB;  // Ending node
+    Group group;        // Group of the element
     double value;  // Value of the element (or scale factor if it is controlled
                    // source)
     Variable controlling_variable;  // Only for controlled sources, controlling
                                     // variable
-    shared_ptr<CircuitElement>
+    std::shared_ptr<CircuitElement>
         controlling_element;  // Only for controlled sources, controlling
                               // element
     bool processed;           // Flag value to know whether it is processed

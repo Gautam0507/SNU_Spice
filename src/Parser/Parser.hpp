@@ -29,10 +29,10 @@
 class Parser
 {
    public:
-    vector<shared_ptr<CircuitElement>>
+    std::vector<std::shared_ptr<CircuitElement>>
         circuitElements;  // Stores the circuit elements in form of a vector
-    set<string> nodes_group2;  // Stores all node names and group_2 circuit
-                               // element names
+    std::set<std::string> nodes_group2;  // Stores all node names and group_2
+                                         // circuit element names
 
     /*
      * @brief		Parses the file (netlist) into a vector
@@ -41,7 +41,7 @@ class Parser
      *
      * @return		number of errors in the netlist
      */
-    int parse(const string &file);
+    int parse(const std::string &file);
 
     /*
      * @brief		Prints the vectors which contains the circuit elements

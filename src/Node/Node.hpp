@@ -32,8 +32,9 @@ class Edge;
 class Node
 {
    public:
-    string name;                     // Name of the node
-    vector<shared_ptr<Edge>> edges;  // List of edges connected in the node
+    std::string name;  // Name of the node
+    std::vector<std::shared_ptr<Edge>>
+        edges;       // List of edges connected in the node
     bool processed;  // Flag value to know whether it is processed
 
     /*
@@ -46,6 +47,7 @@ class Node
      *
      * @return		void
      */
-    void traverse(map<string, int> &indexMap, vector<vector<double>> &mna,
-                  vector<double> &rhs);
+    void traverse(std::map<std::string, int> &indexMap,
+                  std::vector<std::vector<double>> &mna,
+                  std::vector<double> &rhs);
 };

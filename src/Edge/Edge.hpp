@@ -29,8 +29,8 @@ class Node;
 class Edge
 {
    public:
-    shared_ptr<Node> source;  // Pointer to starting node of the element
-    shared_ptr<Node> target;  // Pointer to ending node of the element
-    shared_ptr<CircuitElement>
+    std::shared_ptr<Node> source;  // Pointer to starting node of the element
+    std::shared_ptr<Node> target;  // Pointer to ending node of the element
+    std::shared_ptr<CircuitElement>
         circuitElement;  // Pointer to the circuit element
 };

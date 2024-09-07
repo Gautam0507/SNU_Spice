@@ -19,64 +19,75 @@
 
 #include "main.hpp"
 
-void makeIndexMap(map<string, int> &indexMap, Parser &parser)
+#include <iomanip>
+#include <iostream>
+
+void makeIndexMap(std::map<std::string, int> &indexMap, Parser &parser)
 {
     int i = 0;
 
-    for (string str : parser.nodes_group2)
-        if (str.compare("0") != 0) indexMap[str] = i++;
-}
-
-void printMNAandRHS(vector<vector<double>> &mna, map<string, int> &indexMap,
-                    vector<double> &rhs)
-{
-    cout << fixed;
-    cout << setprecision(5);
-
-    map<string, int>::iterator k = indexMap.begin();
-
-    for (size_t i = 0; i < mna.size(); i++, k++) {
-        for (size_t j = 0; j < mna.size(); j++) cout << mna[i][j] << "\t\t";
-        cout << "\t\t" << k->first << "\t\t" << rhs[i] << endl;
+    for (std::string str : parser.nodes_group2) {
+        if (str.compare("0") != 0) {
+            indexMap[str] = i++;
+        }
     }
 }
 
-void makeGraph(map<string, shared_ptr<Node>> &nodeMap, Parser &parser)
+void printMNAandRHS(std::vector<std::vector<double>> &mna,
+                    std::map<std::string, int> &indexMap,
+                    std::vector<double> &rhs)
 {
-    for (shared_ptr<CircuitElement> circuitElement : parser.circuitElements) {
+    std::cout << std::fixed;
+    std::cout << std::setprecision(5);
+
+    std::map<std::string, int>::iterator k = indexMap.begin();
+
+    for (size_t i = 0; i < mna.size(); i++, k++) {
+        for (size_t j = 0; j < mna.size(); j++) {
+            std::cout << mna[i][j] << "\t\t";
+        }
+        std::cout << "\t\t" << k->first << "\t\t" << rhs[i] << std::endl;
+    }
+}
+
+void makeGraph(std::map<std::string, std::shared_ptr<Node>> &nodeMap,
+               Parser &parser)
+{
+    for (std::shared_ptr<CircuitElement> circuitElement :
+         parser.circuitElements) {
         // Creates/retrieves start node
-        shared_ptr<Node> nodeStart;
-        map<string, shared_ptr<Node>>::iterator startNodeIter =
+        std::shared_ptr<Node> nodeStart;
+        std::map<std::string, std::shared_ptr<Node>>::iterator startNodeIter =
             nodeMap.find(circuitElement->nodeA);
         if (startNodeIter != nodeMap.end())
             nodeStart = startNodeIter->second;
         else {
-            nodeStart = make_shared<Node>();
+            nodeStart = std::make_shared<Node>();
             nodeStart->name = circuitElement->nodeA;
             nodeMap[circuitElement->nodeA] = nodeStart;
         }
 
         // Creates/retrieves end node
-        shared_ptr<Node> nodeEnd;
-        map<string, shared_ptr<Node>>::iterator endNodeIter =
+        std::shared_ptr<Node> nodeEnd;
+        std::map<std::string, std::shared_ptr<Node>>::iterator endNodeIter =
             nodeMap.find(circuitElement->nodeB);
         if (endNodeIter != nodeMap.end())
             nodeEnd = endNodeIter->second;
         else {
-            nodeEnd = make_shared<Node>();
+            nodeEnd = std::make_shared<Node>();
             nodeEnd->name = circuitElement->nodeB;
             nodeMap[circuitElement->nodeB] = nodeEnd;
         }
 
         // Edge from start node to end node for nodeStart
-        shared_ptr<Edge> edgeStartEnd = make_shared<Edge>();
+        std::shared_ptr<Edge> edgeStartEnd = std::make_shared<Edge>();
         edgeStartEnd->source = nodeStart;
         edgeStartEnd->target = nodeEnd;
         edgeStartEnd->circuitElement = circuitElement;
         nodeStart->edges.push_back(edgeStartEnd);
 
         // Edge from end node to start node for nodeEnd
-        shared_ptr<Edge> edgeEndStart = make_shared<Edge>();
+        std::shared_ptr<Edge> edgeEndStart = std::make_shared<Edge>();
         edgeEndStart->source = nodeEnd;
         edgeEndStart->target = nodeStart;
         edgeEndStart->circuitElement = circuitElement;
@@ -84,16 +95,16 @@ void makeGraph(map<string, shared_ptr<Node>> &nodeMap, Parser &parser)
     }
 }
 
-void printxX(map<string, int> &indexMap, Eigen::MatrixXd &X)
+void printxX(std::map<std::string, int> &indexMap, Eigen::MatrixXd &X)
 {
-    cout << fixed;
-    cout << setprecision(5);
+    std::cout << std::fixed;
+    std::cout << std::setprecision(5);
 
-    map<string, int>::iterator k = indexMap.begin();
+    std::map<std::string, int>::iterator k = indexMap.begin();
 
-    cout << "\n";
+    std::cout << "\n";
     for (size_t i = 0; i < indexMap.size(); i++, k++)
-        cout << k->first << "\t\t" << X(i) << endl;
+        std::cout << k->first << "\t\t" << X(i) << std::endl;
 }
 
 int main()
@@ -104,20 +115,21 @@ int main()
 
     // Map to store all nodes' and group_2 elements' index position in MNA and
     // RHS matrix
-    map<string, int> indexMap;
+    std::map<std::string, int> indexMap;
     makeIndexMap(indexMap, parser);
 
     // Creates MNA and RHS matrix and initializes to 0.0
     int m = int(indexMap.size());
-    vector<vector<double>> mna(m, vector<double>(m, 0.0));
-    vector<double> rhs(m, 0.0);
+    std::vector<std::vector<double>> mna(m, std::vector<double>(m, 0.0));
+    std::vector<double> rhs(m, 0.0);
 
     // Map to store the graph of the circuit
-    map<string, shared_ptr<Node>> nodeMap;
+    std::map<std::string, std::shared_ptr<Node>> nodeMap;
     makeGraph(nodeMap, parser);
 
     // Picks the first node from nodeMap
-    map<string, shared_ptr<Node>>::iterator startNodeIter = nodeMap.begin();
+    std::map<std::string, std::shared_ptr<Node>>::iterator startNodeIter =
+        nodeMap.begin();
     advance(startNodeIter, 1);
 
     // Traverses the whole graph and populates the MNA and RHS matrices
@@ -125,7 +137,7 @@ int main()
         startNodeIter->second->traverse(indexMap, mna, rhs);
 
     // Code to solve using Eigen Library
-    vector<double> v;
+    std::vector<double> v;
     for (int i = 0; i < m; i++)
         for (int j = 0; j < m; j++) v.push_back(mna[i][j]);
 
@@ -140,7 +152,8 @@ int main()
     // De-allocating previously allocated
     // memory for solve method to use
     parser.circuitElements.clear();
-    for (map<string, shared_ptr<Node>>::iterator i = nodeMap.begin();
+    for (std::map<std::string, std::shared_ptr<Node>>::iterator i =
+             nodeMap.begin();
          i != nodeMap.end(); i++)
         i->second->edges.clear();
     nodeMap.clear();
