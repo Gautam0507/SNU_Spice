@@ -19,18 +19,8 @@
 
 #pragma once
 
-// All necessary header files
-#include <algorithm>
-#include <cmath>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <map>
 #include <memory>
-#include <set>
-#include <sstream>
 #include <string>
-#include <vector>
 
 using namespace std;
 

@@ -19,6 +19,11 @@
 
 #pragma once
 
+#include <map>
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "../Edge/Edge.hpp"
 
 // Forward Declaration

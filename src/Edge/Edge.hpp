@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include "../CircuitElement/CircuitElement.hpp"
 #include "../Node/Node.hpp"
 // Forward Declaration

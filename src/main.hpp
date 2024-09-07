@@ -18,6 +18,10 @@
  */
 
 #pragma once
+#include <map>
+#include <memory>
+#include <string>
+#include <vector>
 
 #include "../lib/external/Eigen/Dense"
 #include "Node/Node.hpp"
