@@ -29,27 +29,32 @@ if(DOXYGEN_FOUND)
   # https://cmake.org/cmake/help/latest/module/FindDoxygen.html#variable:DOXYGEN_EXCLUDE_PATTERNS
   set(DOXYGEN_EXCLUDE_PATTERNS */external/* */build/*)
 
-  # Setting various options for doxygen
-  set(DOXYGEN_COLLABORATION_GRAPH YES)
-  set(DOXYGEN_EXTRACT_ALL YES)
-  set(DOXYGEN_CLASS_DIAGRAMS YES)
-  set(DOXYGEN_HIDE_UNDOC_RELATIONS NO)
+  # Treeview and appearence of the documentation pages
+  set(DOXYGEN_DISABLE_INDEX YES)
+  set(DOXYGEN_GENERATE_TREEVIEW YES)
+  set(DOXYGEN_FULL_SIDEBAR YES)
+
+  # Disable pdf documentation generation
+  set(DOXYGEN_GENERATE_LATEX NO)
+
+  # Dot graph options
   set(DOXYGEN_HAVE_DOT YES)
+  set(DOXYGEN_UML_LOOK YES)
+  set(DOXYGEN_HIDE_UNDOC_RELATIONS NO)
   set(DOXYGEN_CLASS_GRAPH YES)
   set(DOXYGEN_CALL_GRAPH YES)
   set(DOXYGEN_CALLER_GRAPH YES)
   set(DOXYGEN_COLLABORATION_GRAPH YES)
   set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
+  set(DOXYGEN_TEMPLATE_RELATIONS YES)
+  set(DOXYGEN_DOT_TRANSPARENT YES)
+
+  # Disable to generate warnings for undocumented functions
+  set(DOXYGEN_EXTRACT_ALL YES)
   set(DOXYGEN_EXTRACT_PRIVATE YES)
   set(DOXYGEN_EXTRACT_PACKAGE YES)
   set(DOXYGEN_EXTRACT_STATIC YES)
   set(DOXYGEN_EXTRACT_LOCALMETHODS YES)
-  set(DOXYGEN_UML_LOOK YES)
-  set(DOXYGEN_UML_LIMIT_NUM_FIELDS 50)
-  set(DOXYGEN_TEMPLATE_RELATIONS YES)
-  set(DOXYGEN_DOT_GRAPH_MAX_NODES 100)
-  set(DOXYGEN_MAX_DOT_GRAPH_DEPTH 0)
-  set(DOXYGEN_DOT_TRANSPARENT YES)
 
   # Add a target "documentation" to generate documentation with Doxygen
   doxygen_add_docs(documentation ${PROJECT_SOURCE_DIR})
