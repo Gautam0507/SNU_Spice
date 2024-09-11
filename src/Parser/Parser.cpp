@@ -27,8 +27,7 @@
 #include <ostream>
 #include <sstream>
 
-using std::cout;
-using std::endl;
+using std::cout, std::endl;
 
 int Parser::parse(const std::string &file)
 {
