@@ -24,6 +24,7 @@ find_package(Doxygen REQUIRED dot OPTIONAL_COMPONENTS mscgen dia)
 
 if(DOXYGEN_FOUND)
   set(DOXYGEN_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/docs)
+  set(DOXYGEN_LAYOUT_FILE ${PROJECT_SOURCE_DIR}/DoxygenLayout.xml)
 
   # Here we must make Doxygen do not generate the docs for dependency See
   # https://cmake.org/cmake/help/latest/module/FindDoxygen.html#variable:DOXYGEN_EXCLUDE_PATTERNS
