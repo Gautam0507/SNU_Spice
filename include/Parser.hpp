@@ -20,25 +20,33 @@
 #pragma once
 
 #include <memory>
+#include <set>
 #include <string>
+#include <vector>
 
-enum Component { V, I, R, Ic, Vc };  // Identifies type of element
-enum Group { G1, G2 };               // Groups element based on output required
-enum Variable { none, v, i };        // Controlling variable
+#include "CircuitElement.hpp"
 
-struct CircuitElement
+class Parser
 {
-    std::string name;   // Name of the element
-    Component type;     // Type of the element
-    std::string nodeA;  // Starting node
-    std::string nodeB;  // Ending node
-    Group group;        // Group of the element
-    double value;  // Value of the element (or scale factor if it is controlled
-                   // source)
-    Variable controlling_variable;  // Only for controlled sources, controlling
-                                    // variable
-    std::shared_ptr<CircuitElement>
-        controlling_element;  // Only for controlled sources, controlling
-                              // element
-    bool processed;           // Flag value to know whether it is processed
+   public:
+    std::vector<std::shared_ptr<CircuitElement>>
+        circuitElements;  // Stores the circuit elements in form of a vector
+    std::set<std::string> nodes_group2;  // Stores all node names and group_2
+                                         // circuit element names
+
+    /**
+     * @brief		Parses the file (netlist) into a vector
+     *
+     * @param[ref]	file string
+     *
+     * @return		number of errors in the netlist
+     */
+    int parse(const std::string &file);
+
+    /**
+     * @brief		Prints the vectors which contains the circuit elements
+     *
+     * @return  void
+     */
+    void print();
 };

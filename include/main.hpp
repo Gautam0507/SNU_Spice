@@ -24,10 +24,10 @@
 #include <vector>
 
 #include "../lib/external/Eigen/Dense"
-#include "Node/Node.hpp"
-#include "Parser/Parser.hpp"
+#include "Node.hpp"
+#include "Parser.hpp"
 
-/*
+/**
  * @brief		Creates map of nodes and group_2 element to
  *				index position of in MNA and RHS matrices
  *
@@ -38,7 +38,7 @@
  */
 void makeIndexMap(std::map<std::string, int> &indexMap, Parser &parser);
 
-/*
+/**
  * @brief		Prints the MNA, x and RHS matrices
  *
  * @param		mna vector<vector<double>>
@@ -51,7 +51,7 @@ void printMNAandRHS(std::vector<std::vector<double>> &mna,
                     std::map<std::string, int> &indexMap,
                     std::vector<double> &rhs);
 
-/*
+/**
  * @brief		Creates graph from the vector for traversal
  *
  * @param[ref]	nodeMap map<string, shared_ptr<Node>>
@@ -62,7 +62,7 @@ void printMNAandRHS(std::vector<std::vector<double>> &mna,
 void makeGraph(std::map<std::string, std::shared_ptr<Node>> &nodeMap,
                Parser &parser);
 
-/*
+/**
  * @brief		Print the solution of x along with unknown variables
  *
  * @param   	indexMap map<string, int>

@@ -19,35 +19,27 @@
 
 #pragma once
 
-#include <map>
 #include <memory>
-#include <string>
-#include <vector>
 
-#include "../Edge/Edge.hpp"
+#include "CircuitElement.hpp"
+#include "Node.hpp"
 
 // Forward Declaration
-class Edge;
+class Node;
 
-class Node
+/**
+ * @brief Represents an edge in the graph
+ *
+ * Each edge represents a circuit element that is connected bettween two Node.
+ *
+ * */
+class Edge
 {
    public:
-    std::string name;  // Name of the node
-    std::vector<std::shared_ptr<Edge>>
-        edges;       // List of edges connected in the node
-    bool processed;  // Flag value to know whether it is processed
-
-    /*
-     * @brief		Traverses the map (graph of the circuit) and
-     *				populates the MNA and RHS matrices
-     *
-     * @param		indexMap map<string, int>
-     * @param		mna vector<vector<double>>
-     * @param		rhs vector<double>
-     *
-     * @return		void
-     */
-    void traverse(std::map<std::string, int> &indexMap,
-                  std::vector<std::vector<double>> &mna,
-                  std::vector<double> &rhs);
+    std::shared_ptr<Node>
+        source; /**< Pointer to starting node of the element */
+    std::shared_ptr<Node> target; /**< Pointer to ending node of the element */
+    std::shared_ptr<CircuitElement>
+        circuitElement; /**< Pointer to the circuit element that the edge
+                           represents */
 };

@@ -17,7 +17,7 @@
  * ENHANCEMENTS, OR MODIFICATIONS.
  */
 
-#include "Node.hpp"
+#include "../../include/Node.hpp"
 
 void Node::traverse(std::map<std::string, int> &indexMap,
                     std::vector<std::vector<double>> &mna,

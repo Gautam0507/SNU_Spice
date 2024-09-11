@@ -19,34 +19,35 @@
 
 #pragma once
 
+#include <map>
 #include <memory>
-#include <set>
 #include <string>
 #include <vector>
 
-#include "../CircuitElement/CircuitElement.hpp"
+#include "Edge.hpp"
 
-class Parser
+// Forward Declaration
+class Edge;
+
+class Node
 {
    public:
-    std::vector<std::shared_ptr<CircuitElement>>
-        circuitElements;  // Stores the circuit elements in form of a vector
-    std::set<std::string> nodes_group2;  // Stores all node names and group_2
-                                         // circuit element names
+    std::string name;  // Name of the node
+    std::vector<std::shared_ptr<Edge>>
+        edges;       // List of edges connected in the node
+    bool processed;  // Flag value to know whether it is processed
 
-    /*
-     * @brief		Parses the file (netlist) into a vector
+    /**
+     * @brief		Traverses the map (graph of the circuit) and
+     *				populates the MNA and RHS matrices
      *
-     * @param[ref]	file string
-     *
-     * @return		number of errors in the netlist
-     */
-    int parse(const std::string &file);
-
-    /*
-     * @brief		Prints the vectors which contains the circuit elements
+     * @param		[indexMap] map<string, int>
+     * @param		[mna] vector<vector<double>>
+     * @param		[rhs] vector<double>
      *
      * @return		void
      */
-    void print();
+    void traverse(std::map<std::string, int> &indexMap,
+                  std::vector<std::vector<double>> &mna,
+                  std::vector<double> &rhs);
 };

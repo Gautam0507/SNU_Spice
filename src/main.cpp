@@ -17,7 +17,7 @@
  * ENHANCEMENTS, OR MODIFICATIONS.
  */
 
-#include "main.hpp"
+#include "../include/main.hpp"
 
 #include <iomanip>
 #include <iostream>
