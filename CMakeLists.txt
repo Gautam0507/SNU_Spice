@@ -37,6 +37,7 @@ if(DOXYGEN_FOUND)
 
   # Disable pdf documentation generation
   set(DOXYGEN_GENERATE_LATEX NO)
+  set(DOXYGEN_JAVADOC_AUTOBRIEF YES)
 
   # Dot graph options
   set(DOXYGEN_HAVE_DOT YES)
