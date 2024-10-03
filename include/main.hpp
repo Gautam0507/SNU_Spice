@@ -17,6 +17,12 @@
  * ENHANCEMENTS, OR MODIFICATIONS.
  */
 
+/**
+ * @file main.hpp
+ *
+ * @brief Contains the definition of the main functions
+ */
+
 #pragma once
 #include <map>
 #include <memory>
@@ -34,7 +40,6 @@
  * @param		indexMap map<string, int>
  * @param		parser Parser
  *
- * @return		void
  */
 void makeIndexMap(std::map<std::string, int> &indexMap, Parser &parser);
 
@@ -45,7 +50,6 @@ void makeIndexMap(std::map<std::string, int> &indexMap, Parser &parser);
  * @param		indexmap map<string, int>
  * @param		rhs vector<double>
  *
- * @return		void
  */
 void printMNAandRHS(std::vector<std::vector<double>> &mna,
                     std::map<std::string, int> &indexMap,
@@ -57,7 +61,6 @@ void printMNAandRHS(std::vector<std::vector<double>> &mna,
  * @param[ref]	nodeMap map<string, shared_ptr<Node>>
  * @param		parser Parser
  *
- * @return		void
  */
 void makeGraph(std::map<std::string, std::shared_ptr<Node>> &nodeMap,
                Parser &parser);
@@ -68,6 +71,5 @@ void makeGraph(std::map<std::string, std::shared_ptr<Node>> &nodeMap,
  * @param   	indexMap map<string, int>
  * @param		X Eigen::MatrixXd
  *
- * @return		void
  */
 void printxX(std::map<std::string, int> &indexMap, Eigen::MatrixXd &X);

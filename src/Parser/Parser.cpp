@@ -16,6 +16,11 @@
  * NADAR UNIVERSITY HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES,
  * ENHANCEMENTS, OR MODIFICATIONS.
  */
+/**
+ * @file Parser.cpp
+ *
+ * @brief Contains the implementation of the Parser class
+ */
 
 #include "../../include/Parser.hpp"
 
@@ -58,7 +63,7 @@ int Parser::parse(const std::string &file)
         while (ss >> buf) tokens.push_back(buf);
 
         // Skips empty lines and comments
-        if (tokens.size() == 0 || tokens.at(0).rfind("%", 0) == 0) continue;
+        if (tokens.size() == 0 || tokens.at(0).find("%") == 0) continue;
 
         // Both nodes can't be same
         if (tokens.at(1) == tokens.at(2)) {
@@ -80,7 +85,7 @@ int Parser::parse(const std::string &file)
         }
 
         // Dependent Current Source (contains two data validation condidtions)
-        if ((tokens.at(0).rfind("IC", 0) == 0) && (tokens.size() >= 6)) {
+        if ((tokens.at(0).find("IC") == 0) && (tokens.size() >= 6)) {
             std::shared_ptr<CircuitElement> temp =
                 std::make_shared<CircuitElement>();
             temp->name = tokens.at(0);
@@ -89,7 +94,7 @@ int Parser::parse(const std::string &file)
             temp->nodeB = tokens.at(2);
             temp->group = G1;
             temp->value = value;
-            temp->controlling_variable = tokens.at(4) == "V" ? v : i;
+            temp->controlling_variable = (tokens.at(4) == "V") ? v : i;
 
             // Data Validation: Illegal controlling variable argument
             if (tokens.at(4) != "V" && tokens.at(4) != "I") {
@@ -100,8 +105,7 @@ int Parser::parse(const std::string &file)
             }
 
             // Data Validation: Cascading of controlled sources is not allowed
-            if (tokens.at(5).rfind("IC", 0) == 0 ||
-                tokens.at(5).rfind("VC", 0) == 0) {
+            if (tokens.at(5).find("IC") == 0 || tokens.at(5).find("VC") == 0) {
                 cout << "Error: Controlled source " + tokens.at(0) +
                             " cannot be cascaded at line number "
                      << (lineNumber - 1) << ": " + line << end;
@@ -123,8 +127,9 @@ int Parser::parse(const std::string &file)
 
             ic_count++;
         }
+
         // Dependent Voltage Source (contains tow data validation condidtions)
-        else if ((tokens.at(0).rfind("VC", 0) == 0) && (tokens.size() >= 6)) {
+        else if ((tokens.at(0).find("VC") == 0) && (tokens.size() >= 6)) {
             std::shared_ptr<CircuitElement> temp =
                 std::make_shared<CircuitElement>();
             temp->name = tokens.at(0);
@@ -144,8 +149,7 @@ int Parser::parse(const std::string &file)
             }
 
             // Data Validation: Cascading of controlled sources is not allowed
-            if (tokens.at(5).rfind("IC", 0) == 0 ||
-                tokens.at(5).rfind("VC", 0) == 0) {
+            if (tokens.at(5).find("IC") == 0 || tokens.at(5).find("VC") == 0) {
                 cout << "Error: Controlled source " + tokens.at(0) +
                             " cannot be cascaded"
                      << end;
@@ -168,8 +172,9 @@ int Parser::parse(const std::string &file)
 
             vc_count++;
         }
+
         // Independent Voltage Source
-        else if ((tokens.at(0).rfind("V", 0) == 0) && (tokens.size() >= 4)) {
+        else if ((tokens.at(0).find("V") == 0) && (tokens.size() >= 4)) {
             std::shared_ptr<CircuitElement> temp =
                 std::make_shared<CircuitElement>();
             temp->name = tokens.at(0);
@@ -188,10 +193,12 @@ int Parser::parse(const std::string &file)
             nodes_group2.insert(temp->name);
             nodes_group2.insert(temp->nodeA);
             nodes_group2.insert(temp->nodeB);
+
             v_count++;
         }
+
         // Independent Current Source (contains one data validation condition)
-        else if ((tokens.at(0).rfind("I", 0) == 0) && (tokens.size() >= 4)) {
+        else if ((tokens.at(0).find("I") == 0) && (tokens.size() >= 4)) {
             std::shared_ptr<CircuitElement> temp =
                 std::make_shared<CircuitElement>();
             temp->name = tokens.at(0);
@@ -222,8 +229,9 @@ int Parser::parse(const std::string &file)
 
             i_count++;
         }
+
         // Resistor (contains one data validation condition)
-        else if ((tokens.at(0).rfind("R", 0) == 0) && (tokens.size() >= 4)) {
+        else if ((tokens.at(0).find("R") == 0) && (tokens.size() >= 4)) {
             std::shared_ptr<CircuitElement> temp =
                 std::make_shared<CircuitElement>();
             temp->name = tokens.at(0);

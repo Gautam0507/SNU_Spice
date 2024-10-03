@@ -17,6 +17,12 @@
  * ENHANCEMENTS, OR MODIFICATIONS.
  */
 
+/**
+ * @file CircuitElement.hpp
+ *
+ * @brief Contains the definition of the CircuitElement struct
+ */
+
 #pragma once
 
 #include <memory>
@@ -26,7 +32,8 @@
  *
  * Specifies the type of element that are supported by CircuitElement
  * */
-enum Component {
+enum Component
+{
     V,  /**<  Voltage source */
     I,  /**<  Current source */
     R,  /**<  Resistor */
@@ -35,30 +42,44 @@ enum Component {
 };
 
 /** @enum Gruoup
+ *
  * Specifies the group of element that are supported by CircuitElement
  * */
-enum Group { G1, G2 };  // Groups element based on output required
+enum Group
+{
+    G1 /**< Group 1: the currents for these elements need to be eliminated */,
+    G2 /** Group 2: Elements not in G1. Other methods must be employed*/
+};
 
-/** \enum  Specifies the controlling variable for controlled sources */
-enum ControlVariable {
+/** @enum ControlVariable
+ *
+ * @brief Specifies the controlling variable for controlled sources
+ * */
+enum ControlVariable
+{
     none, /**<  No controlling variable */
     v,    /**<  Voltage */
     i     /**< Current */
 };
 
+/** @struct CircuitElement
+ *
+ * @brief Represents the properties of any element in the circuit
+ * */
+
 struct CircuitElement
 {
     std::string name;  /**< Name of the element*/
-    Component type;    /**< Type of the element */
+    Component type;    /**< Specifies the type of the circuit element  */
     std::string nodeA; /**< Starting node */
     std::string nodeB; /**< Ending node */
-    Group group;       /**< Group of the element */
+    Group group;       /**< Specifier if it belongs to  Group 1 or Group 2   */
     double value; /**< Value of the element (or scale factor if it is controlled
-                     source*/
+                     source)*/
     ControlVariable controlling_variable; /**< Only for controlled sources,
-                                     variable that controls the source */
+                                     variable that the element depends on  */
     std::shared_ptr<CircuitElement>
-        controlling_element; /**< Only for controlled sources, element that
-                                controls the source */
+        controlling_element; /**< Only for controlled sources, element whose
+                                value that the current element depends on  */
     bool processed;          /**< Flag value to know whether it is processed */
 };

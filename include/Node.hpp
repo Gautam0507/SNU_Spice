@@ -17,6 +17,12 @@
  * ENHANCEMENTS, OR MODIFICATIONS.
  */
 
+/**
+ * @file Node.hpp
+ *
+ * @brief Contains the definition of the Node class
+ */
+
 #pragma once
 
 #include <map>
@@ -29,23 +35,33 @@
 // Forward Declaration
 class Edge;
 
+/**
+ * @class Node
+ *
+ * @brief Represents a node in the graph
+ *
+ * Each node represents a circuit element that is connected between two Node.
+ * */
+
 class Node
 {
    public:
-    std::string name;  // Name of the node
+    std::string name; /**< Name of the node */
     std::vector<std::shared_ptr<Edge>>
-        edges;       // List of edges connected in the node
-    bool processed;  // Flag value to know whether it is processed
+        edges;      /**< List of edges connected to the node */
+    bool processed; /**< Flag value to know whether it is processed */
 
     /**
      * @brief		Traverses the map (graph of the circuit) and
      *				populates the MNA and RHS matrices
      *
-     * @param		[indexMap] map<string, int>
-     * @param		[mna] vector<vector<double>>
-     * @param		[rhs] vector<double>
+     * @param	[indexMap] map<string, int>
      *
-     * @return		void
+     * @param	[out] mna The left hand side matrix for the modified
+     *nodal analysis equation
+     *
+     * @param [out] rhs An 1 x n vector representing  the
+     *independent voltage sources
      */
     void traverse(std::map<std::string, int> &indexMap,
                   std::vector<std::vector<double>> &mna,

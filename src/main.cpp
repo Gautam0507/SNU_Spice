@@ -17,6 +17,12 @@
  * ENHANCEMENTS, OR MODIFICATIONS.
  */
 
+/**
+ * @file main.cpp
+ *
+ * @brief Contains the  implemntation of the main functions
+ */
+
 #include "../include/main.hpp"
 
 #include <iomanip>
@@ -111,7 +117,7 @@ int main()
 {
     // Creates a parser to store the circuit in form of vector
     Parser parser;
-    if (parser.parse("circuit.hms") != 0) return 1;
+    if (parser.parse("circuit.sns") != 0) return 1;
 
     // Map to store all nodes' and group_2 elements' index position in MNA and
     // RHS matrix

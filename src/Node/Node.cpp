@@ -17,6 +17,12 @@
  * ENHANCEMENTS, OR MODIFICATIONS.
  */
 
+/**
+ * @file Node.cpp
+ *
+ * @brief Contains the implementation of the Node class
+ */
+
 #include "../../include/Node.hpp"
 
 void Node::traverse(std::map<std::string, int> &indexMap,

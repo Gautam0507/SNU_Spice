@@ -17,6 +17,12 @@
  * ENHANCEMENTS, OR MODIFICATIONS.
  */
 
+/**
+ * @file Edge.hpp
+ *
+ * @brief Contains the definition of the Edge class
+ */
+
 #pragma once
 
 #include <memory>
@@ -28,6 +34,8 @@
 class Node;
 
 /**
+ * @class Edge
+ *
  * @brief Represents an edge in the graph
  *
  * Each edge represents a circuit element that is connected bettween two Node.

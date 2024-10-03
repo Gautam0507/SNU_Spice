@@ -17,6 +17,12 @@
  * ENHANCEMENTS, OR MODIFICATIONS.
  */
 
+/**
+ * @file Parser.hpp
+ *
+ * @brief Contains the definition of the Parser class
+ */
+
 #pragma once
 
 #include <memory>
@@ -26,18 +32,29 @@
 
 #include "CircuitElement.hpp"
 
+/**
+ * @class Parser
+ *
+ * @brief Parses the netlist file and stores the circuit elements
+ *
+ * The Parser class reads the netlist file and stores the circuit elements in a
+ * vector. It also stores the node names and group_2 circuit element names in a
+ * set for further processing.
+ *
+ * */
+
 class Parser
 {
    public:
     std::vector<std::shared_ptr<CircuitElement>>
-        circuitElements;  // Stores the circuit elements in form of a vector
-    std::set<std::string> nodes_group2;  // Stores all node names and group_2
-                                         // circuit element names
+        circuitElements; /**< Stores the circuit elements in form of a vector */
+    std::set<std::string> nodes_group2; /**< Stores all node names and group_2
+                                         circuit element names*/
 
     /**
      * @brief		Parses the file (netlist) into a vector
      *
-     * @param[ref]	file string
+     * @param	file The name of the file
      *
      * @return		number of errors in the netlist
      */
@@ -46,7 +63,6 @@ class Parser
     /**
      * @brief		Prints the vectors which contains the circuit elements
      *
-     * @return  void
      */
     void print();
 };
