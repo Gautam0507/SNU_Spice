@@ -51,9 +51,11 @@ cmake --build .
 
 ### Running
 
-- Type the netlist in the _circuit.hms_ file
+- Type the netlist in the _circuit.sns_ file
 
-- Run the executable file from the terminal to get all nodal voltages and required currents
+- If the file is located in a different directory, provide the path to the file as a command-line argument when calling the function. 
+
+- Run the executable file in the terminal from the project root to get all nodal voltages and required currents
 
 Note: If built using Cmake, the executable file will be in the `build/src` directory
 

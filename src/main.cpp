@@ -113,11 +113,17 @@ void printxX(std::map<std::string, int> &indexMap, Eigen::MatrixXd &X)
         std::cout << k->first << "\t\t" << X(i) << std::endl;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
+    // Default filename if not provided as command line argument.
+    std::string filename = "circuit.sns";
+    if (argc > 1) {
+        filename = argv[1];
+    }
+
     // Creates a parser to store the circuit in form of vector
     Parser parser;
-    if (parser.parse("circuit.sns") != 0) return 1;
+    if (parser.parse(filename) != 0) return 1;
 
     // Map to store all nodes' and group_2 elements' index position in MNA and
     // RHS matrix
