@@ -64,5 +64,5 @@ class Parser
      * @brief		Prints the vectors which contains the circuit elements
      *
      */
-    void print();
+    void printParser();
 };

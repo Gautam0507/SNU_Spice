@@ -29,16 +29,17 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <memory>
 #include <ostream>
 #include <sstream>
 
 using std::cout, std::endl;
 
-int Parser::parse(const std::string &file)
+int Parser::parse(const std::string &fileName)
 {
-    cout << "\nFile Name: " + file << endl;
+    cout << "\nFile Name: " + fileName << endl;
 
-    std::ifstream fileStream(file);
+    std::ifstream fileStream(fileName);
     if (!fileStream) {
         cout << "Error: Netlist not avialable in the project directory" << endl;
         return 1;
@@ -325,7 +326,7 @@ int Parser::parse(const std::string &file)
     return error;
 }
 
-void Parser::print()
+void Parser::printParser()
 {
     for (std::shared_ptr<CircuitElement> circuitElement : circuitElements)
         if (circuitElement->type == V || circuitElement->type == I ||

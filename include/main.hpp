@@ -37,8 +37,9 @@
  * @brief		Creates map of nodes and group_2 element to
  *				index position of in MNA and RHS matrices
  *
- * @param		indexMap map<string, int>
- * @param		parser Parser
+ * @param		 indexMap A map storing the name of the node and its
+ *corresponding index in the MNA and RHS matrices
+ * @param		parser passes the created parser object to the function
  *
  */
 void makeIndexMap(std::map<std::string, int> &indexMap, Parser &parser);
@@ -46,9 +47,10 @@ void makeIndexMap(std::map<std::string, int> &indexMap, Parser &parser);
 /**
  * @brief		Prints the MNA, x and RHS matrices
  *
- * @param		mna vector<vector<double>>
- * @param		indexmap map<string, int>
- * @param		rhs vector<double>
+ * @param		mna MNA Matrix
+ * @param		indexmap Created index map from the makeIndexMap
+ * function
+ * @param		rhs RHS vector
  *
  */
 void printMNAandRHS(std::vector<std::vector<double>> &mna,
