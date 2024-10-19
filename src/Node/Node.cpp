@@ -106,6 +106,17 @@ void Node::traverse(std::map<std::string, int> &indexMap,
                 }
             }
         }
+        // Capacitor
+        else if (edge->circuitElement->type == C) {
+            // Group 1
+            if (edge->circuitElement->group == G1) {
+            }
+            // Group 2
+            else {
+                // When source node is connected to ground
+                mna[i][i] += 1.0;
+            }
+        }
         // Independent Current Source
         else if (edge->circuitElement->type == I) {
             // Group 1

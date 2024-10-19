@@ -45,8 +45,8 @@ int Parser::parse(const std::string &fileName)
         return 1;
     }
     std::string line;
-    int lineNumber = 1, v_count = 0, i_count = 0, r_count = 0, vc_count = 0,
-        ic_count = 0, error = 0;
+    int lineNumber = 1, v_count = 0, i_count = 0, r_count = 0, c_count = 0,
+        vc_count = 0, ic_count = 0, error = 0;
 
     // Stores pointer of all independent sources and resistors
     // for assigning to controlling_element variable later
@@ -263,6 +263,38 @@ int Parser::parse(const std::string &fileName)
 
             r_count++;
         }
+        // Capacitor (Contains one data validation condition
+        else if ((tokens.at(0).find("C") == 0) && (tokens.size() >= 4)) {
+            std::shared_ptr<CircuitElement> temp =
+                std::make_shared<CircuitElement>();
+            temp->name = tokens.at(0);
+            temp->type = C;
+            temp->nodeA = tokens.at(1);
+            temp->nodeB = tokens.at(2);
+            if (tokens.size() >= 5 && tokens.at(4) == "G2") {
+                temp->group = G2;
+                nodes_group2.insert(temp->name);
+            }
+            // Data Validation: Correct group declaration
+            else if (tokens.size() >= 5 && tokens.at(4) != "G1") {
+                cout << "Warning: Mention correct group at line number "
+                     << (lineNumber - 1) << ": " + line << endl;
+                temp->group = G1;
+            } else
+                temp->group = G1;
+            temp->value = value;
+            temp->controlling_variable = none;
+            temp->controlling_element = NULL;
+            temp->processed = false;
+
+            nodes_group2.insert(temp->nodeA);
+            nodes_group2.insert(temp->nodeB);
+
+            circuitElements.push_back(temp);
+            elementMap[temp->name] = temp;
+
+            c_count++;
+        }
         // Unknown Element
         else {
             cout << "Error: Unknown element at line number " << (lineNumber - 1)
@@ -321,6 +353,7 @@ int Parser::parse(const std::string &fileName)
              << endl;
         cout << "Total Dependent Current Source(s) in the Circuit: " << ic_count
              << endl;
+        cout << "Total Capacitor(s) in the Circuit: " << c_count << endl;
     }
 
     return error;
