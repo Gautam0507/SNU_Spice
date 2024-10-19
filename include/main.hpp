@@ -75,3 +75,14 @@ void makeGraph(std::map<std::string, std::shared_ptr<Node>> &nodeMap,
  *
  */
 void printxX(std::map<std::string, int> &indexMap, Eigen::MatrixXd &X);
+
+/**
+ * @brief		Runs the solver
+ * The function contains the entire functionality to run the solver
+ *
+ * @param		argc Number of arguments
+ * @param		argv Arguments
+ *
+ * @return		0 if successful
+ */
+int runSolver(int argc, char *argv[]);

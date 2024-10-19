@@ -113,7 +113,7 @@ void printxX(std::map<std::string, int> &indexMap, Eigen::MatrixXd &X)
         std::cout << k->first << "\t\t" << X(i) << std::endl;
 }
 
-int main(int argc, char *argv[])
+int runSolver(int argc, char *argv[])
 {
     // Default filename if not provided as command line argument.
     std::string filename = "circuit.sns";
@@ -166,8 +166,9 @@ int main(int argc, char *argv[])
     parser.circuitElements.clear();
     for (std::map<std::string, std::shared_ptr<Node>>::iterator i =
              nodeMap.begin();
-         i != nodeMap.end(); i++)
+         i != nodeMap.end(); i++) {
         i->second->edges.clear();
+    }
     nodeMap.clear();
     mna.clear();
     rhs.clear();
@@ -176,6 +177,7 @@ int main(int argc, char *argv[])
     Eigen::MatrixXd X = MNA.lu().solve(RHS);
 
     printxX(indexMap, X);
-
     return 0;
 }
+
+int main(int argc, char *argv[]) { return runSolver(argc, argv); }
