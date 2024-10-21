@@ -39,7 +39,9 @@ enum Component
     R,  /**<  Resistor */
     Ic, /**<  Current controlled current source */
     Vc, /**<  Voltage controlled voltage source */
-    C   /**<  Capacitor */
+    C,  /**<  Capacitor */
+    L,  /**< Inductor */
+
 };
 
 /** @enum Gruoup

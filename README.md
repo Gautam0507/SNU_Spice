@@ -78,8 +78,9 @@ cmake --build . -t documentation
 - Dependent Current Source: `Ic<string> <node.+> <node.-> <factor> <variable> <circuitElement>`
 - Independent Voltage Source: `V<string> <node.+> <node.-> <value>`
 - Dependent Voltage Source: `Vc<string> <node.+> <node.-> <factor> <variable> <circuitElement>`
-
 - Resistor: `R<string> <node.+> <node.-> <value> [G2]`
+- Capacitor: `C<string> <node.+> <node.-> <value> [G2]`
+- Inductor: `L<string> <node.+> <node.-> <value>`
 
 `G2`, for group 2, is an optional field that tells the simulator that the user is interested in knowing the current across the circuit element. By default, all voltage sources are group 2.
 

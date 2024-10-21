@@ -46,7 +46,7 @@ int Parser::parse(const std::string &fileName)
     }
     std::string line;
     int lineNumber = 1, v_count = 0, i_count = 0, r_count = 0, c_count = 0,
-        vc_count = 0, ic_count = 0, error = 0;
+        vc_count = 0, ic_count = 0, error = 0, l_count;
 
     // Stores pointer of all independent sources and resistors
     // for assigning to controlling_element variable later
@@ -294,6 +294,28 @@ int Parser::parse(const std::string &fileName)
             elementMap[temp->name] = temp;
 
             c_count++;
+        }  // Inductors (always  group 2)
+        else if ((tokens.at(0).find("L") == 0) && (tokens.size() >= 4)) {
+            std::shared_ptr<CircuitElement> temp =
+                std::make_shared<CircuitElement>();
+            temp->name = tokens.at(0);
+            temp->type = L;
+            temp->nodeA = tokens.at(1);
+            temp->nodeB = tokens.at(2);
+            temp->group = G2;
+            temp->value = value;
+            temp->controlling_variable = none;
+            temp->controlling_element = NULL;
+            temp->processed = false;
+
+            circuitElements.push_back(temp);
+            elementMap[temp->name] = temp;
+
+            nodes_group2.insert(temp->name);
+            nodes_group2.insert(temp->nodeA);
+            nodes_group2.insert(temp->nodeB);
+
+            l_count++;
         }
         // Unknown Element
         else {
@@ -354,6 +376,7 @@ int Parser::parse(const std::string &fileName)
         cout << "Total Dependent Current Source(s) in the Circuit: " << ic_count
              << endl;
         cout << "Total Capacitor(s) in the Circuit: " << c_count << endl;
+        cout << "Total Inductors(s) in the Circuit: " << l_count << endl;
     }
 
     return error;

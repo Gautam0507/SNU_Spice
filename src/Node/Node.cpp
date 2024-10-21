@@ -114,7 +114,39 @@ void Node::traverse(std::map<std::string, int> &indexMap,
             // Group 2
             else {
                 // When source node is connected to ground
+                int i = indexMap[edge->circuitElement->name];
                 mna[i][i] += 1.0;
+            }
+        }
+        // Inductor (always Group 2)
+        else if (edge->circuitElement->type == L) {
+            // When source node is connected to ground
+            if (edge->circuitElement->nodeA.compare("0") == 0) {
+                int vminus = indexMap[edge->circuitElement->nodeB];
+                int i = indexMap[edge->circuitElement->name];
+
+                mna[vminus][i] += 1.0;
+                mna[i][vminus] += 1.0;
+            }
+            // When target node is connected to ground
+            else if (edge->circuitElement->nodeB.compare("0") == 0) {
+                int vplus = indexMap[edge->circuitElement->nodeA];
+                int i = indexMap[edge->circuitElement->name];
+
+                mna[vplus][i] += 1.0;
+                mna[i][vplus] += 1.0;
+
+            }
+            // When both the nodes are not connected ground
+            else {
+                int vplus = indexMap[edge->circuitElement->nodeA];
+                int vminus = indexMap[edge->circuitElement->nodeB];
+                int i = indexMap[edge->circuitElement->name];
+
+                mna[vplus][i] += 1.0;
+                mna[vminus][i] += -1.0;
+                mna[i][vplus] += 1.0;
+                mna[i][vminus] += -1.0;
             }
         }
         // Independent Current Source
