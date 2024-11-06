@@ -46,7 +46,7 @@ int Parser::parse(const std::string &fileName)
     }
     std::string line;
     int lineNumber = 1, v_count = 0, i_count = 0, r_count = 0, c_count = 0,
-        vc_count = 0, ic_count = 0, error = 0, l_count;
+        vc_count = 0, ic_count = 0, error = 0, l_count = 0;
 
     // Stores pointer of all independent sources and resistors
     // for assigning to controlling_element variable later
