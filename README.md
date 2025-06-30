@@ -1,6 +1,6 @@
 # SNU Spice
 
-SNU Spice is an electronic circuit simulator for circuits containing voltage, current sources (independent/dependent) and resistors, i.e., for **purely resistive circuits**. This simulator is inspired by the "[Circuit Simulation](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470561218)" book by Farid N. Najm.
+SNU Spice is an electronic circuit simulator designed for purely resistive circuits, handling voltage and current sources (both independent and dependent) along with resistors. This project is being developed as part of the Opportunities for Undergraduate Research Program (OUR) 2024 at Shiv Nadar University, under project code OUR20240023, and is carried out under the supervision of Prof. Venkatnarayan Hariharan. The simulator is inspired by the methodologies outlined in the book "[Circuit Simulation](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470561218)" by Farid N. Najm.
 
 ## Table of Contents
 
